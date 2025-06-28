@@ -1,8 +1,17 @@
+import os
+from dotenv import load_dotenv
 import simpleobsws
+
+#  Load config
+load_dotenv()
+OBS_WS_HOST = os.environ.get("OBS_WS_HOST")
+OBS_WS_PORT = os.environ.get("OBS_WS_PORT")
+OBS_WS_PASS = os.environ.get("OBS_WS_PASS")
 
 class OBSClient:
     def __init__(self):
-        self.ws = simpleobsws.WebSocketClient(url = "ws://localhost:4455")
+        url = f"ws://{OBS_WS_HOST}:{OBS_WS_PORT}"
+        self.ws = simpleobsws.WebSocketClient(url=url, password=OBS_WS_PASS)
 
     async def connect(self):
         await self.ws.connect()
