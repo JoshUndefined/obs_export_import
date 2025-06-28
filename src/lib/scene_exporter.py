@@ -1,10 +1,10 @@
 import os
 import json
 import shutil
-from obs_client import OBSClient
-from utils import sanitize_filename, download_media_file
+from .obs_client import OBSClient
+from .utils import sanitize_filename, download_media_file
 
-async def export_scene(scene_name: str, output_dir="packaged_scenes", asset_dir="assets"):
+async def export_scene(scene_name: str, output_dir="output/packaged_scenes", asset_dir="output/assets"):
     client = OBSClient()
     await client.connect()
 

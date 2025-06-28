@@ -3,5 +3,4 @@ venv
 __pycache__
 
 # output directories
-packaged_scenes/
-assets/
+output/

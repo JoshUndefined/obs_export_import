@@ -1,6 +1,6 @@
 import asyncio
 import argparse
-from scene_exporter import export_scene
+from lib.scene_exporter import export_scene
 
 parser = argparse.ArgumentParser("test_export")
 parser.add_argument("scene", help="Scene name to export", type=str)

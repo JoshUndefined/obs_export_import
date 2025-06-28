@@ -1,8 +1,8 @@
 import json
 import os
-from obs_client import OBSClient
+from .obs_client import OBSClient
 
-async def import_scene(config_path: str, asset_dir="assets"):
+async def import_scene(config_path: str, asset_dir="output/assets"):
     with open(config_path, "r") as f:
         config = json.load(f)
     # print(config)
