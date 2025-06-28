@@ -1,2 +1,6 @@
 .env
 venv
+
+# output directories
+packaged_scenes/
+assets/
