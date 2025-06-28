@@ -5,7 +5,9 @@ logger = logging.getLogger(__name__)
 from .obs_client import OBSClient
 from .utils import sanitize_filename, download_media_file
 
-async def export_scene(scene_name: str, output_dir="output/packaged_scenes", asset_dir="output/assets"):
+async def export_scene(scene_name: str):
+    output_dir = f"output/{scene_name}/"
+    asset_dir = f"output/{scene_name}/assets"
     client = OBSClient()
     await client.connect()
 

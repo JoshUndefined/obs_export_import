@@ -4,7 +4,9 @@ import logging
 logger = logging.getLogger(__name__)
 from .obs_client import OBSClient
 
-async def import_scene(config_path: str, asset_dir="output/assets"):
+async def import_scene(scene_name: str):
+    config_path = f"output/{scene_name}/{scene_name}.json"
+    asset_dir = f"output/{scene_name}/assets"
     with open(config_path, "r") as f:
         config = json.load(f)
     # logger.debug(config)

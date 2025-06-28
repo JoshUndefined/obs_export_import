@@ -23,7 +23,7 @@ async def main():
     logger.debug("Verbose logging enabled")
     logger.info(f"Importing scene: {args.scene}")
 
-    await import_scene(f"output/packaged_scenes/{args.scene}.json")
+    await import_scene(args.scene)
 
 if __name__ == "__main__":
     asyncio.run(main())
