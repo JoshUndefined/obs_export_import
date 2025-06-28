@@ -1,5 +1,7 @@
 import os
 from dotenv import load_dotenv
+import logging
+logger = logging.getLogger(__name__)
 import simpleobsws
 
 #  Load config
@@ -22,37 +24,37 @@ class OBSClient:
 
     async def get_version(self):
         result = await self.ws.call(simpleobsws.Request("GetVersion"))
-        print(f"get_version() = {result.responseData.get('obsVersion')}")
+        logger.info(f"get_version() = {result.responseData.get('obsVersion')}")
         return result.responseData.get("obsVersion")
 
     async def get_scene_items(self, scene_name):
-        # print(f"get_scene_items({scene_name})")
+        logger.info(f"get_scene_items({scene_name})")
         result = await self.ws.call(simpleobsws.Request("GetSceneItemList", {"sceneName": scene_name}))
-        # print(result)
+        # logger.debug(result)
         return result.responseData.get("sceneItems", [])
 
     async def get_source_settings(self, source_name):
-        # print(f"get_source_settings({source_name})")
+        logger.info(f"get_source_settings({source_name})")
         result = await self.ws.call(simpleobsws.Request("GetInputSettings", {"inputName": source_name}))
         return result.responseData
 
     async def get_source_filters(self, source_name):
-        # print(f"get_source_filters({source_name})")
+        logger.info(f"get_source_filters({source_name})")
         result = await self.ws.call(simpleobsws.Request("GetSourceFilterList", {"sourceName": source_name}))
         return result.responseData.get("filters", [])
 
     async def create_scene(self, scene_name):
-        print(f"create_scene({scene_name})")
+        logger.info(f"create_scene({scene_name})")
         await self.ws.call(simpleobsws.Request("CreateScene", {"sceneName": scene_name}))
 
     async def create_source(self, scene_name, source_name, source_kind, settings, transform):
-        print(f"create_source({source_name})")
-        # print(f"scene_name: {scene_name}")
-        # print(f"source_name: {source_name}")
-        # print(f"source_kind: {source_kind}")
-        # print(f"settings: {settings}")
-        # print(f"transform: {transform}")
-        print("parameters: {}".format({
+        logger.info(f"create_source({source_name})")
+        # logger.debug(f"scene_name: {scene_name}")
+        # logger.debug(f"source_name: {source_name}")
+        # logger.debug(f"source_kind: {source_kind}")
+        # logger.debug(f"settings: {settings}")
+        # logger.debug(f"transform: {transform}")
+        logger.debug("parameters: {}".format({
             "sceneName": scene_name,
             "inputName": source_name,
             "inputKind": source_kind,
@@ -68,9 +70,9 @@ class OBSClient:
             "sceneItemTransform": transform,
             "sceneItemEnabled": True
         }))
-        print(result)
+        logger.debug(result)
         source_uuid = result.responseData["sceneItemId"]
-        print(f"source_uuid: {source_uuid}")
+        logger.debug(f"source_uuid: {source_uuid}")
         await self.set_transform(
             scene_name=scene_name,
             source_uuid=source_uuid,
@@ -78,15 +80,15 @@ class OBSClient:
         )
 
     async def add_filter(self, source_name, filter_data):
-        print(f"add_filter({source_name})")
+        logger.info(f"add_filter({source_name})")
         await self.ws.call(simpleobsws.Request("CreateSourceFilter", {
             "sourceName": source_name,
             **filter_data
         }))
 
     async def set_transform(self, scene_name, source_uuid, transform_data):
-        print(f"set_transform({source_uuid})")
-        print(f"transform_data: {transform_data}")
+        logger.info(f"set_transform(source_uuid: {source_uuid})")
+        logger.debug(f"transform_data: {transform_data}")
         #  If bounding data is disabled, exporter sets to zero. Remove or SetSceneItemTransform fails
         if(transform_data["boundsType"] == "OBS_BOUNDS_NONE"):
             del transform_data["boundsWidth"]
@@ -97,4 +99,4 @@ class OBSClient:
             "sceneItemId": source_uuid,
             "sceneItemTransform": transform_data
         }))
-        print(result)
+        logger.debug(result)
