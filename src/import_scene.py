@@ -2,7 +2,7 @@ import asyncio
 import argparse
 from lib.scene_importer import import_scene
 
-parser = argparse.ArgumentParser("test_import")
+parser = argparse.ArgumentParser("import_scene")
 parser.add_argument("scene", help="Scene name to import", type=str)
 args = parser.parse_args()
 
