@@ -27,7 +27,7 @@ async def import_scene(scene_name: str):
         if item.get("local_file"):
             if "file" in settings:
                 settings["file"] = os.path.abspath(os.path.join(asset_dir, os.path.basename(item["local_file"])))
-                logger.debug("new file name: {}".format(settings["file"]))
+                logger.info("new file name: {}".format(settings["file"]))
 
         await client.create_source(
             scene_name,

@@ -39,6 +39,8 @@ _TODO_
 
 _TODO_
 
+`pyinstaller.exe src/import_scene.py --add-data "output;output"`
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
